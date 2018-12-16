@@ -3,7 +3,8 @@
 	Provides function to set custom i2C port
 	Sets default i2C port to Wire if not declared
 	Change all "Wire." to "_wire->"
-	Rev 2017-10-18 - Joe Mitchell
+	Change Mag ODR to 12.5 Hz
+	Rev 2018-10-28 - Joe Mitchell
 */
 
 #include <LSM303.h>
@@ -219,8 +220,9 @@ void LSM303::enableDefault(void)
     // Magnetometer
 
     // 0x64 = 0b01100100
-    // M_RES = 11 (high resolution mode); M_ODR = 001 (6.25 Hz ODR)
-    writeReg(CTRL5, 0x64);
+    // M_RES = 11 (high resolution mode); M_ODR = 001 (6.25 Hz ODR) - 0x64
+	// Edited for Caveatron - Change ODR to 12.5 Hz - 0x68
+    writeReg(CTRL5, 0x68);
 
     // 0x20 = 0b00100000
     // MFS = 01 (+/- 4 gauss full scale)
