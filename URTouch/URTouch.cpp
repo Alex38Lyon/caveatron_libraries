@@ -23,7 +23,8 @@
 /*
 	This library has been modified for use with the Caveatron
 	Added initialization function to directly pass screen calibration parameters
-	Rev 2017-10-17 - Joe Mitchell
+	Added delays when using with Teensy 3.5/3.6 to slow touch read clocking
+	Rev 2019-02-07 - Joe Mitchell
 */
 
 #include "URTouch.h"
@@ -134,16 +135,32 @@ void URTouch::read()
 	{
 		if (!rbi(P_IRQ, B_IRQ))
 		{
-			touch_WriteData(0x90);        
+			touch_WriteData(0x90);   
+			#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+				delayMicroseconds(1);	
+			#endif
 			pulse_high(P_CLK, B_CLK);
+			#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+				delayMicroseconds(1);	
+			#endif
 			temp_x=touch_ReadData();
-
+			#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+				delayMicroseconds(1);	
+			#endif
 			if (!rbi(P_IRQ, B_IRQ))
 			{
-				touch_WriteData(0xD0);      
+				touch_WriteData(0xD0); 
+				#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+					delayMicroseconds(1);	
+				#endif			
 				pulse_high(P_CLK, B_CLK);
+				#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+					delayMicroseconds(1);	
+				#endif
 				temp_y=touch_ReadData();
-
+				#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+					delayMicroseconds(1);	
+				#endif
 				if ((temp_x>0) and (temp_x<4096) and (temp_y>0) and (temp_y<4096))
 				{
 					tx+=temp_x;
@@ -288,14 +305,30 @@ void URTouch::calibrateRead()
 
 	cbi(P_CS, B_CS);                    
 
-	touch_WriteData(0x90);        
+	touch_WriteData(0x90);
+	#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+		delayMicroseconds(1);	
+	#endif
 	pulse_high(P_CLK, B_CLK);
+	#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+		delayMicroseconds(1);	
+	#endif
 	tx=touch_ReadData();
-
-	touch_WriteData(0xD0);      
+	#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+		delayMicroseconds(1);	
+	#endif
+	touch_WriteData(0xD0); 
+	#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+		delayMicroseconds(1);	
+	#endif
 	pulse_high(P_CLK, B_CLK);
+	#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+		delayMicroseconds(1);	
+	#endif
 	ty=touch_ReadData();
-
+	#if defined (__MK64FX512__) || defined(__MK66FX1M0__)	//Modified for Caveatron to slow clock for Teensy
+		delayMicroseconds(1);	
+	#endif
 	sbi(P_CS, B_CS);                    
 
 	TP_X=ty;
