@@ -38,14 +38,17 @@
 	Moves global variable declarations to UTFT_CTE.h for consistency
 	Adds two functions to compute and return the pixel length of a string on the x-axis
 	Adds function to return the pixel height of a font on the y-axis
-	Rev 2017-10-18 - Joe Mitchell
+	Adds new hardware folder and functions to support Teensy 3.5/3.6
+	Rev 2019-01-24 - Joe Mitchell
 */
 
 #include "UTFT_CTE.h"
 #include <UTFT.h>
 
 #if defined(__AVR__)											
-	#include "hardware/avr/HW_AVR.h"							
+	#include "hardware/avr/HW_AVR.h"	
+#elif defined (__MK64FX512__) || defined (__MK66FX1M0__) //Caveatron Modification for Teensy 3.5/3.6	
+	#include "hardware/teensy/HW_TEENSY.h"				//Caveatron Modification for Teensy 3.5/3.6	
 #elif defined(__arm__)											
 	#include "hardware/arm/HW_ARM.h"							
 #endif															

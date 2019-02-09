@@ -40,7 +40,8 @@
 /*
 	This library has been modified for use with the Caveatron
 	Provides constructor variant for display model to be declared seperately from constructor
-	Rev 2017-10-18 - Joe Mitchell
+	Added support for Teensy 3.5/3.6
+	Rev 2019-01-24 - Joe Mitchell
 */
 
 #include "UTFT.h"
@@ -81,8 +82,8 @@
 	#if defined(__SAM3X8E__)
 		#pragma message("Compiling for Arduino Due (AT91SAM3X8E)...")
 		#include "hardware/arm/HW_SAM3X8E.h"
-	#elif defined(__MK20DX128__) || defined(__MK20DX256__)
-		#pragma message("Compiling for Teensy 3.x (MK20DX128VLH7 / MK20DX256VLH7)...")
+	#elif defined(__MK20DX128__) || defined(__MK20DX256__) || defined (__MK64FX512__) || defined(__MK66FX1M0__) //Modified for Caveatron to add Teensy 3.5/3.6 support
+		#pragma message("Compiling for Teensy 3.x ...")
 		#include "hardware/arm/HW_MX20DX256.h"
 	#elif defined(__CC3200R1M1RGC__)
 		#pragma message("Compiling for TI CC3200 LaunchPad...")

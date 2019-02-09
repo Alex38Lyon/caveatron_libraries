@@ -3,7 +3,8 @@
 	Changed BVS defines to CBVS to avoid conflict with UTFT_GHL library
 	Adds new function definitions for returning pixel size of strings in x and y
 	Moves five global variable declarations from UTFT_CTE.cpp for consistency
-	Rev 2017-10-18 - Joe Mitchell
+	Adds new hardware folder and functions to support Teensy 3.5/3.6
+	Rev 2019-01-24 - Joe Mitchell
 */
 
 #ifndef UTFT_CTE_h											
@@ -11,7 +12,9 @@
 
 #if defined(__AVR__)										
 	#include "hardware/avr/HW_AVR_defines.h"				
-	#include "SPI.h"										
+	#include "SPI.h"
+#elif defined (__MK64FX512__) || defined (__MK66FX1M0__) //Caveatron Modification for Teensy 3.5/3.6	
+	#include "hardware/teensy/HW_TEENSY_defines.h"		//Caveatron Modification for Teensy 3.5/3.6	
 #elif defined(__arm__)										
 	#include "hardware/arm/HW_ARM_defines.h"				
 #endif														
